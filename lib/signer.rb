@@ -104,7 +104,7 @@ class Signer
       signature_node.add_child(node)
       set_namespace_for_node(node, DS_NAMESPACE, ds_namespace_prefix)
       canonicalization_method_node = Nokogiri::XML::Node.new('CanonicalizationMethod', document)
-      canonicalization_method_node['Algorithm'] = 'http://www.w3.org/2001/10/xml-exc-c14n#'
+      canonicalization_method_node['Algorithm'] = 'http://www.w3.org/TR/2001/REC-xml-c14n-20010315'
       node.add_child(canonicalization_method_node)
       set_namespace_for_node(canonicalization_method_node, DS_NAMESPACE, ds_namespace_prefix)
       signature_method_node = Nokogiri::XML::Node.new('SignatureMethod', document)
