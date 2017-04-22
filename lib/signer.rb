@@ -15,10 +15,11 @@ class Signer
   WSSE_NAMESPACE = 'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd'
   DS_NAMESPACE = 'http://www.w3.org/2000/09/xmldsig#'
 
-  def initialize(document, noblanks: true)
+  def initialize(document, noblanks: true, signature_id_value: nil)
     self.document = Nokogiri::XML(document.to_s) do |config|
       config.noblanks if noblanks
     end
+    @signature_node_id_value = signature_id_value
     self.digest_algorithm = :sha1
     self.set_default_signature_method!
   end
@@ -88,6 +89,7 @@ class Signer
         set_namespace_for_node(@signature_node, DS_NAMESPACE, ds_namespace_prefix)
         security_node.add_child(@signature_node)
       end
+      @signature_node['Id'] = @signature_node_id_value unless @signature_node_id_value.nil?
       @signature_node
     end
   end
